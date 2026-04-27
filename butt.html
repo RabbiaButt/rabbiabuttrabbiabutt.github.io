@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rabbia Butt | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0b0f1a;
+    --surface: #121829;
+    --card: #1a2236;
+    --accent: #c084fc;
+    --accent2: #818cf8;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: rgba(192,132,252,0.15);
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.6; min-height: 100vh; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(11,15,26,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero { min-height: 90vh; display: flex; align-items: center; padding: 4rem 2rem; position: relative; overflow: hidden; }
+  .hero::before { content:''; position: absolute; top: -150px; right: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(192,132,252,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content:''; position: absolute; bottom: -100px; left: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(129,140,248,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-inner { max-width: 900px; margin: 0 auto; }
+  .hero-tag { display: inline-block; background: rgba(192,132,252,0.1); border: 1px solid rgba(192,132,252,0.3); color: var(--accent); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 50px; margin-bottom: 1.5rem; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.15; margin-bottom: 1rem; }
+  .hero h1 span { background: linear-gradient(135deg, #c084fc, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 540px; margin-bottom: 2rem; font-weight: 300; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: linear-gradient(135deg, #c084fc, #818cf8); color: white; padding: 0.7rem 1.8rem; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: opacity 0.2s, transform 0.2s; }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-outline { border: 1px solid rgba(192,132,252,0.4); color: var(--accent); padding: 0.7rem 1.8rem; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 400; transition: background 0.2s; }
+  .btn-outline:hover { background: rgba(192,132,252,0.08); }
+
+  /* SECTIONS */
+  section { padding: 4rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 2.5rem; }
+  hr.divider { border: none; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+  .about-text { color: var(--muted); font-size: 1rem; line-height: 1.8; font-weight: 300; }
+  .about-details { display: flex; flex-direction: column; gap: 1rem; }
+  .detail-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
+  .detail-label { font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+  .detail-value { font-size: 0.95rem; color: var(--text); font-weight: 400; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
+  .skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1rem; text-align: center; transition: border-color 0.2s, transform 0.2s; }
+  .skill-card:hover { border-color: rgba(192,132,252,0.5); transform: translateY(-3px); }
+  .skill-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .skill-name { font-size: 0.85rem; color: var(--text); font-weight: 500; margin-bottom: 0.3rem; }
+  .skill-type { font-size: 0.72rem; color: var(--muted); }
+
+  /* EDUCATION */
+  .edu-timeline { display: flex; flex-direction: column; gap: 1.2rem; }
+  .edu-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 1.2rem 1.5rem; }
+  .edu-degree { font-weight: 500; font-size: 1rem; margin-bottom: 0.25rem; }
+  .edu-school { color: var(--accent2); font-size: 0.9rem; margin-bottom: 0.25rem; }
+  .edu-year { color: var(--muted); font-size: 0.8rem; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+  .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+  .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #c084fc, #818cf8); }
+  .project-card:hover { border-color: rgba(192,132,252,0.4); transform: translateY(-4px); cursor: pointer; }
+  .project-tag { display: inline-block; background: rgba(192,132,252,0.1); color: var(--accent); font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 20px; margin-bottom: 0.75rem; }
+  .project-title { font-weight: 500; font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .project-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.6; font-weight: 300; }
+  .project-link { display: inline-flex; align-items: center; gap: 0.3rem; margin-top: 0.75rem; font-size: 0.78rem; color: var(--accent); opacity: 0.7; transition: opacity 0.2s; text-decoration: none; }
+  .project-card:hover .project-link { opacity: 1; }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .contact-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s; }
+  .contact-card:hover { border-color: rgba(192,132,252,0.5); transform: translateY(-2px); }
+  .contact-icon { width: 42px; height: 42px; background: rgba(192,132,252,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .contact-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.2rem; letter-spacing: 1px; text-transform: uppercase; }
+  .contact-value { font-size: 0.88rem; font-weight: 400; word-break: break-all; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.82rem; font-weight: 300; margin-top: 2rem; }
+
+  @media (max-width: 600px) {
+    .about-grid { grid-template-columns: 1fr; }
+    nav { padding: 1rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">RB</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Computer Science Student</div>
+    <h1>Hello, I'm<br><span>Rabbia Butt</span></h1>
+    <p class="hero-sub">A passionate CS undergraduate at Fatima Jinnah Women University, exploring the world through code, data, and creativity.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View My Projects</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<section id="about">
+  <p class="section-label">Who I Am</p>
+  <h2 class="section-title">About Me</h2>
+  <div class="about-grid">
+    <p class="about-text">I'm a 4th semester BCS student at Fatima Jinnah Women University, with a background in science and pre-engineering. I'm passionate about building real-world solutions through programming — from database-driven applications to object-oriented systems. When I'm not coding, you'll find me lost in a good book or exploring new technologies.</p>
+    <div class="about-details">
+      <div class="detail-item">
+        <div class="detail-label">Degree</div>
+        <div class="detail-value">BCS — Computer Science</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">University</div>
+        <div class="detail-value">Fatima Jinnah Women University</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Semester</div>
+        <div class="detail-value">4th Semester (Current)</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Hobbies</div>
+        <div class="detail-value">Reading · Coding · Exploring Tech</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="skills">
+  <p class="section-label">What I Know</p>
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name">C</div>
+      <div class="skill-type">Systems</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧩</div>
+      <div class="skill-name">C++</div>
+      <div class="skill-type">OOP</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">☕</div>
+      <div class="skill-name">Java</div>
+      <div class="skill-type">OOP</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Python</div>
+      <div class="skill-type">Scripting</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">Database</div>
+      <div class="skill-type">SQL</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML/CSS</div>
+      <div class="skill-type">Web</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">COAL</div>
+      <div class="skill-type">Assembly</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔗</div>
+      <div class="skill-name">CN</div>
+      <div class="skill-type">Networking</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔌</div>
+      <div class="skill-name">Digital Logic Design</div>
+      <div class="skill-type">Hardware</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌲</div>
+      <div class="skill-name">Data Structures</div>
+      <div class="skill-type">DSA</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="education">
+  <p class="section-label">Academic Journey</p>
+  <h2 class="section-title">Education</h2>
+  <div class="edu-timeline">
+    <div class="edu-card">
+      <div class="edu-degree">BCS — Bachelor of Computer Science</div>
+      <div class="edu-school">Fatima Jinnah Women University</div>
+      <div class="edu-year">2022 – Present · 4th Semester</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">FSc Pre-Engineering</div>
+      <div class="edu-school">Intermediate Board</div>
+      <div class="edu-year">Completed</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Matric — Science</div>
+      <div class="edu-school">Secondary School</div>
+      <div class="edu-year">Completed</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="projects">
+  <p class="section-label">What I've Built</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/SPORTS-MANAGEMENT-SYSTEM','_blank')">
+      <span class="project-tag">C++</span>
+      <div class="project-title">Sports Management System</div>
+      <p class="project-desc">A console-based system to manage players, teams, matches, and scores using object-oriented programming principles in C++.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/SPORTS-MANAGEMENT-SYSTEM" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/Student-grade-calculator-PY','_blank')">
+      <span class="project-tag">Python</span>
+      <div class="project-title">Student Grade Calculator</div>
+      <p class="project-desc">A Python application that calculates GPA, generates grade reports, and tracks academic performance for multiple students.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/Student-grade-calculator-PY" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/Library-management-SQL','_blank')">
+      <span class="project-tag">SQL · Database</span>
+      <div class="project-title">Library Management System</div>
+      <p class="project-desc">A relational database system to manage book records, member registrations, issue/return tracking, and fine calculations.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/Library-management-SQL" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/Bankaccountsystem-JAVA','_blank')">
+      <span class="project-tag">Java</span>
+      <div class="project-title">Bank Account System</div>
+      <p class="project-desc">An OOP-based Java project simulating banking operations — deposits, withdrawals, account creation and balance management.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/Bankaccountsystem-JAVA" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/Hospital-patient-record-C','_blank')">
+      <span class="project-tag">C</span>
+      <div class="project-title">Hospital Patient Record</div>
+      <p class="project-desc">A C program managing patient data, doctor assignments, and appointment records using file handling and structs.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/Hospital-patient-record-C" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/rabbiabutt.github.io','_blank')">
+      <span class="project-tag">HTML · CSS</span>
+      <div class="project-title">Personal Portfolio Website</div>
+      <p class="project-desc">This very portfolio — a responsive personal website built to showcase my skills, education, and projects as a CS student.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/rabbiabutt.github.io" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/Expression-Converter-Evaluator-Using-Stack-Only-','_blank')">
+      <span class="project-tag">C++ · Data Structures</span>
+      <div class="project-title">Expression Converter & Evaluator</div>
+      <p class="project-desc">A stack-based program to convert infix expressions to postfix/prefix and evaluate them — implementing core DSA concepts in C++.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/Expression-Converter-Evaluator-Using-Stack-Only-" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/Student-Record-Management-System-Using-Linked-List-Only-','_blank')">
+      <span class="project-tag">C++ · Data Structures</span>
+      <div class="project-title">Student Record Management (Linked List)</div>
+      <p class="project-desc">A linked list-based student record system supporting insert, delete, search, and display operations using dynamic memory allocation.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/Student-Record-Management-System-Using-Linked-List-Only-" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/Customer-Service-Management-System-Using-Queue','_blank')">
+      <span class="project-tag">C++ · Data Structures</span>
+      <div class="project-title">Customer Service Management (Queue)</div>
+      <p class="project-desc">A queue-based simulation of a customer service system with priority handling, ticket generation, and service time tracking.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/Customer-Service-Management-System-Using-Queue" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/SCOTT-Schema','_blank')">
+      <span class="project-tag">SQL · Oracle</span>
+      <div class="project-title">SCOTT Schema</div>
+      <p class="project-desc">Classic Oracle SCOTT schema implementation with advanced SQL queries, views, joins, and complete database design.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/SCOTT-Schema" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/HR-Schema','_blank')">
+      <span class="project-tag">SQL · Oracle</span>
+      <div class="project-title">HR Schema Database</div>
+      <p class="project-desc">Human Resources database schema with complex queries, joins, stored procedures, and views using Oracle SQL.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/HR-Schema" target="_blank">🔗 View on GitHub →</a>
+    </div>
+    <div class="project-card" onclick="window.open('https://github.com/rabbiabutt/mathematical-problem-solving','_blank')">
+      <span class="project-tag">COAL · Assembly</span>
+      <div class="project-title">Mathematical Problem Solving</div>
+      <p class="project-desc">Assembly language programs solving mathematical operations including arithmetic calculations, number conversions, and pattern generation.</p>
+      <a class="project-link" href="https://github.com/rabbiabutt/mathematical-problem-solving" target="_blank">🔗 View on GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="contact">
+  <p class="section-label">Let's Connect</p>
+  <h2 class="section-title">Contact</h2>
+  <div class="contact-grid">
+    <a href="mailto:rabbaibutt2004@gmail.com" class="contact-card">
+      <div class="contact-icon">✉️</div>
+      <div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">rabbaibutt2004@gmail.com</div>
+      </div>
+    </a>
+    <a href="https://github.com/rabbiabutt" target="_blank" class="contact-card">
+      <div class="contact-icon">🐙</div>
+      <div>
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">github.com/rabbiabutt</div>
+      </div>
+    </a>
+    <a href="https://www.linkedin.com/in/rabbia-butt-207642355" target="_blank" class="contact-card">
+      <div class="contact-icon">💼</div>
+      <div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">linkedin.com/in/rabbia-butt-207642355</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  Designed & Built by Rabbia Butt · 2024 · BCS Student @ FJWU
+</footer>
+
+</body>
+</html>
